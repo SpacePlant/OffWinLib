@@ -11,7 +11,7 @@ module;
 
 export module offwinlib:dll_injection;
 
-namespace dll_injection
+namespace owl::dll_injection
 {
 	/*
 	* Injects the DLL located at "dll_path" into the process with PID "process_id" using the CreateRemoteThread technique. If "wait_for_completion" is set, the function waits for LoadLibraryW to complete and frees the allocated memory.

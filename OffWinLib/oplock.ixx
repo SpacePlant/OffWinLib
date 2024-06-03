@@ -15,7 +15,7 @@ module;
 
 export module offwinlib:oplock;
 
-namespace oplock
+namespace owl::oplock
 {
 	export struct oplock_data
 	{

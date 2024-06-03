@@ -39,7 +39,7 @@ int wmain(int argc, wchar_t* argv[])
 			auto target_path = std::wstring{args[3]};
 
 			std::wcout << std::format(LR"([*] Creating registry link from {} to {}...)", link_path, target_path) << std::endl;
-			registry::create_registry_symlink_nt(link_path, target_path);
+			owl::registry::create_registry_symlink_nt(link_path, target_path);
 			std::wcout << L"[+] Link created." << std::endl;
 		}
 		else if (command == L"modify")
@@ -53,13 +53,13 @@ int wmain(int argc, wchar_t* argv[])
 			auto target_path = std::wstring{args[3]};
 
 			std::wcout << std::format(LR"([*] Modifying registry link at {} to point to {}...)", link_path, target_path) << std::endl;
-			registry::modify_registry_symlink_nt(link_path, target_path);
+			owl::registry::modify_registry_symlink_nt(link_path, target_path);
 			std::wcout << L"[+] Link modified." << std::endl;
 		}
 		else if (command == L"delete")
 		{
 			std::wcout << std::format(LR"([*] Deleting registry link {}...)", link_path) << std::endl;
-			registry::delete_registry_symlink_nt(link_path);
+			owl::registry::delete_registry_symlink_nt(link_path);
 			std::wcout << L"[+] Link deleted." << std::endl;
 		}
 		else

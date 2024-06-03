@@ -55,7 +55,7 @@ int wmain(int argc, wchar_t* argv[])
 		}
 
 		std::wcout << std::format(LR"([*] Setting oplock on {} with share mode {} and exclusive mode set to {}...)", path, share_mode, exclusive) << std::endl;
-		auto oplock_data = oplock::set_oplock(std::wstring{path}, share_mode, exclusive);
+		auto oplock_data = owl::oplock::set_oplock(std::wstring{path}, share_mode, exclusive);
 		std::wcout << L"[+] Oplock set." << std::endl;
 
 		std::wcout << L"[*] Waiting for oplock to trigger..." << std::endl;

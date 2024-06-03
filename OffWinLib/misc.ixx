@@ -13,7 +13,7 @@ module;
 
 export module offwinlib:misc;
 
-namespace misc
+namespace owl::misc
 {
 	/*
 	* Returns a vector containing the PIDs for all running processes with the specified name.

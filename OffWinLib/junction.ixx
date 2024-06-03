@@ -34,7 +34,7 @@ struct REPARSE_DATA_BUFFER_MOUNT_POINT
 	} MountPointReparseBuffer;
 };
 
-namespace junction
+namespace owl::junction
 {
 	/*
 	* Creates a junction from the DOS path "junction" to the NT path "target". Will modify an existing junction. Returns true if a folder was created.

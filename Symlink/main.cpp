@@ -34,13 +34,13 @@ int wmain(int argc, wchar_t* argv[])
 		auto file_name = link_path.substr(slash + 1);
 
 		std::wcout << std::format(LR"([*] Creating junction from {} to \RPC Control...)", folder_path) << std::endl;
-		auto folder_created = junction::create_junction(folder_path, LR"(\RPC Control)");
+		auto folder_created = owl::junction::create_junction(folder_path, LR"(\RPC Control)");
 		std::wcout << std::format(L"[+] Junction created. Folder created: {}", folder_created) << std::endl;
 
 		auto symlink_path = LR"(\RPC Control\)"s.append(file_name);
 		auto target_path_nt = LR"(\??\)"s.append(target_path);
 		std::wcout << std::format(LR"([*] Creating symlink from {} to {}...)", symlink_path, target_path_nt) << std::endl;
-		auto symlink_handle = object_manager::create_object_manager_symlink(symlink_path, target_path_nt);
+		auto symlink_handle = owl::object_manager::create_object_manager_symlink(symlink_path, target_path_nt);
 		std::wcout << L"[+] Symlink created. Press enter to delete it...";
 		std::cin.get();
 
@@ -52,7 +52,7 @@ int wmain(int argc, wchar_t* argv[])
 		}
 		else
 		{
-			junction::delete_reparse_point_from_junction(folder_path);
+			owl::junction::delete_reparse_point_from_junction(folder_path);
 			std::wcout << L"[+] Reparse point deleted." << std::endl;
 		}
 	}

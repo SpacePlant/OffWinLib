@@ -17,7 +17,7 @@ export module offwinlib:object_manager;
 ACCESS_MASK constexpr SYMBOLIC_LINK_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | 1;
 extern "C" NTSTATUS NTAPI NtCreateSymbolicLinkObject(HANDLE* Handle, ACCESS_MASK DesiredAccess, OBJECT_ATTRIBUTES* ObjectAttributes, UNICODE_STRING* DestinationName);
 
-namespace object_manager
+namespace owl::object_manager
 {
 	/*
 	* Creates an object manager symbolic link from the NT path "link" to the NT path "target". The symlink is deleted when the returned handle is closed.

@@ -24,7 +24,7 @@ extern "C"
 	NTSTATUS NTAPI NtDeleteKey(HANDLE KeyHandle);
 }
 
-namespace registry
+namespace owl::registry
 {
 	/*
 	* Creates a registry symbolic link from "root_key"\"sub_key" to "target". "root_key" can be a predefined key, e.g. "HKEY_LOCAL_MACHINE". "target" should be an absolute registry path.
