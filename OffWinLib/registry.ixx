@@ -4,9 +4,6 @@ module;
 #include <Windows.h>
 #include <winternl.h>
 
-#ifndef _DEBUG
-#define RESULT_DIAGNOSTICS_LEVEL 0
-#endif
 #include <wil/resource.h>
 #include <wil/result.h>
 #include <wil/safecast.h>

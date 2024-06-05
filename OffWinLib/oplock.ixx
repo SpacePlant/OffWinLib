@@ -1,9 +1,6 @@
 module;
 #include <Windows.h>
 
-#ifndef _DEBUG
-#define RESULT_DIAGNOSTICS_LEVEL 0
-#endif
 #include <wil/filesystem.h>
 #include <wil/resource.h>
 #include <wil/result.h>
