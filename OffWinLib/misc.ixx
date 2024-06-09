@@ -1,4 +1,6 @@
 module;
+#pragma comment(lib, "rpcrt4.lib")
+
 #include <Windows.h>
 #include <tlhelp32.h>
 
@@ -41,5 +43,20 @@ namespace owl::misc
 			}
 		} while (Process32NextW(snapshot.get(), &process_entry));
 		return results;
+	}
+
+	/*
+	* Returns a random UUID.
+	*/
+	export std::wstring generate_uuid()
+	{
+		// Create UUID
+		UUID uuid;
+		THROW_IF_WIN32_ERROR(UuidCreate(&uuid));
+
+		// Convert UUID to string
+		wil::unique_rpc_wstr uuid_string;
+		THROW_IF_WIN32_ERROR(UuidToStringW(&uuid, &uuid_string));
+		return std::wstring{reinterpret_cast<wchar_t*>(uuid_string.get())};
 	}
 }

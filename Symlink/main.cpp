@@ -33,15 +33,21 @@ int wmain(int argc, wchar_t* argv[])
 		auto folder_path = std::wstring{link_path.substr(0, slash)};
 		auto file_name = link_path.substr(slash + 1);
 
-		std::wcout << std::format(LR"([*] Creating junction from {} to \RPC Control...)", folder_path) << std::endl;
-		auto folder_created = owl::junction::create_junction(folder_path, LR"(\RPC Control)");
+		auto directory_object = LR"(\BaseNamedObjects)"s;
+		std::wcout << std::format(LR"([*] Creating directory object in {}...)", directory_object) << std::endl;
+		directory_object += LR"(\)" + owl::misc::generate_uuid();
+		auto directory_handle = owl::object_manager::create_directory_object(directory_object);
+		std::wcout << std::format(L"[+] Directory object created: {}", directory_object) << std::endl;
+
+		std::wcout << std::format(LR"([*] Creating junction from {} to {}...)", folder_path, directory_object) << std::endl;
+		auto folder_created = owl::junction::create_junction(folder_path, directory_object);
 		std::wcout << std::format(L"[+] Junction created. Folder created: {}", folder_created) << std::endl;
 
-		auto symlink_path = LR"(\RPC Control\)"s.append(file_name);
+		auto symlink_path = (directory_object + LR"(\)").append(file_name);
 		auto target_path_nt = LR"(\??\)"s.append(target_path);
 		std::wcout << std::format(LR"([*] Creating symlink from {} to {}...)", symlink_path, target_path_nt) << std::endl;
 		auto symlink_handle = owl::object_manager::create_object_manager_symlink(symlink_path, target_path_nt);
-		std::wcout << L"[+] Symlink created. Press enter to delete it...";
+		std::wcout << L"[+] Symlink created. Press enter to clean up...";
 		std::cin.get();
 
 		std::wcout << L"[*] Removing junction..." << std::endl;
