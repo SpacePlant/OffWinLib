@@ -24,11 +24,11 @@ namespace owl::oplock
 	/*
 	* Sets an oplock on the file or folder at the specified DOS path. Returns a struct with a handle to the path and an event that signals when the oplock is triggered. Close the handle to let file operations continue.
 	*/
-	export oplock_data set_oplock(const std::wstring& path, DWORD share_mode, bool exclusive)
+	export oplock_data set_oplock(const std::wstring& path, DWORD share_mode, bool exclusive, DWORD access_mask = GENERIC_READ, bool delete_on_close = false)
 	{
 		// Open the path
-		DWORD flags = FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_OVERLAPPED | (std::filesystem::is_directory(path) ? FILE_FLAG_BACKUP_SEMANTICS : 0);
-		auto path_handle = wil::open_file(path.c_str(), GENERIC_READ, share_mode, flags);
+		DWORD flags = FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_OVERLAPPED | (std::filesystem::is_directory(path) ? FILE_FLAG_BACKUP_SEMANTICS : 0) | (delete_on_close ? FILE_FLAG_DELETE_ON_CLOSE : 0);
+		auto path_handle = wil::open_file(path.c_str(), access_mask, share_mode, flags);
 
 		// Create an event for when the oplock is triggered
 		auto overlapped = std::make_unique<OVERLAPPED>();
