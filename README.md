@@ -5,7 +5,7 @@
 - **Oplock**: Sample tool for using opportunistic locks ([based on this](https://github.com/googleprojectzero/symboliclink-testing-tools/tree/main/SetOpLock)).
 - **DLLInjector**: Sample tool for injecting DLLs into processes.
 - **FolderContentsDeleteToArbitraryDelete**: Sample tool for turning an arbitrary folder contents delete primitive into an arbitrary file or folder delete primitive ([based on this](https://www.zerodayinitiative.com/blog/2022/3/16/abusing-arbitrary-file-deletes-to-escalate-privilege-and-other-great-tricks)).
-- **FolderDeleteToCodeExec**: Sample tool for tuning an arbitrary folder delete primitive into privileged code execution ([also based on this](https://www.zerodayinitiative.com/blog/2022/3/16/abusing-arbitrary-file-deletes-to-escalate-privilege-and-other-great-tricks)).
+- **FolderDeleteToCodeExec**: Sample tool for turning an arbitrary folder delete primitive into privileged code execution ([also based on this](https://www.zerodayinitiative.com/blog/2022/3/16/abusing-arbitrary-file-deletes-to-escalate-privilege-and-other-great-tricks)).
 - **ErrorMSI**: MSI installer package that throws an error and initiates a rollback immediately.
 
 # Dependencies
