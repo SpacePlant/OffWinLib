@@ -1,0 +1,11 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Package Name="Whatever" Manufacturer="Whatever" Version="1.0.0.0" UpgradeCode="757CE6A8-0840-42A1-B45E-773F9DDA1250" Scope="perUser">
+		<Component Id="Whatever" Guid="7A70D33D-50E4-4645-8CD1-FF85FBF70DFB"></Component>
+
+		<Property Id="ErrorCommand" Value="\"/>
+		<CustomAction Id="Error" Execute="deferred" ExeCommand="" Property="ErrorCommand"/>
+		<InstallExecuteSequence>
+			<Custom Action="Error" After="InstallInitialize"/>
+		</InstallExecuteSequence>
+	</Package>
+</Wix>

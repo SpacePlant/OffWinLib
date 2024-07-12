@@ -15,32 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="offwinlib.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dll_injection.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="registry.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="junction.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="object_manager.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="oplock.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="data_conversion.ixx">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FolderDeleteToCodeExec.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ErrorMSI\bin\ErrorMSI.msi" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

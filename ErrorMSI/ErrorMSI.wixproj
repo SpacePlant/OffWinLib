@@ -1,0 +1,26 @@
+﻿<Project Sdk="WixToolset.Sdk/5.0.0">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <OutputPath>bin\</OutputPath>
+    <SuppressSpecificWarnings>1076</SuppressSpecificWarnings>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>bin\</OutputPath>
+    <SuppressSpecificWarnings>1076</SuppressSpecificWarnings>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <OutputPath>bin\</OutputPath>
+    <SuppressSpecificWarnings>1076</SuppressSpecificWarnings>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <OutputPath>bin\</OutputPath>
+    <SuppressSpecificWarnings>1076</SuppressSpecificWarnings>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <SuppressSpecificWarnings>1076</SuppressSpecificWarnings>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <OutputPath>bin\</OutputPath>
+    <SuppressSpecificWarnings>1076</SuppressSpecificWarnings>
+  </PropertyGroup>
+</Project>
