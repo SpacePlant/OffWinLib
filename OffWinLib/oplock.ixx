@@ -4,7 +4,6 @@ module;
 #include <wil/filesystem.h>
 #include <wil/resource.h>
 #include <wil/result.h>
-#include <wil/safecast.h>
 
 #include <filesystem>
 #include <memory>
@@ -14,11 +13,15 @@ export module offwinlib:oplock;
 
 namespace owl::oplock
 {
-	export struct oplock_data
+	export class oplock_data
 	{
-		wil::unique_hfile handle;
+		// Ordered for correct destruction order
 		std::unique_ptr<OVERLAPPED> overlapped;
+	public:
 		wil::unique_event trigger;
+		wil::unique_hfile handle;
+
+		oplock_data(wil::unique_hfile handle, std::unique_ptr<OVERLAPPED> overlapped, wil::unique_event trigger) : handle{std::move(handle)}, overlapped{std::move(overlapped)}, trigger{std::move(trigger)} {};
 	};
 
 	/*
@@ -32,7 +35,7 @@ namespace owl::oplock
 
 		// Create an event for when the oplock is triggered
 		auto overlapped = std::make_unique<OVERLAPPED>();
-		wil::unique_event oplock_trigger{wil::EventOptions::None};
+		wil::unique_event oplock_trigger{wil::EventOptions::ManualReset};
 		overlapped->hEvent = oplock_trigger.get();
 
 		// Request oplock
@@ -40,7 +43,7 @@ namespace owl::oplock
 		{
 			.StructureVersion = REQUEST_OPLOCK_CURRENT_VERSION,
 			.StructureLength = sizeof(REQUEST_OPLOCK_INPUT_BUFFER),
-			.RequestedOplockLevel = OPLOCK_LEVEL_CACHE_READ | OPLOCK_LEVEL_CACHE_HANDLE | wil::safe_cast<DWORD>(exclusive ? OPLOCK_LEVEL_CACHE_WRITE : 0),
+			.RequestedOplockLevel = OPLOCK_LEVEL_CACHE_READ | OPLOCK_LEVEL_CACHE_HANDLE | (exclusive ? DWORD{OPLOCK_LEVEL_CACHE_WRITE} : 0),
 			.Flags = REQUEST_OPLOCK_INPUT_FLAG_REQUEST
 		};
 		REQUEST_OPLOCK_OUTPUT_BUFFER output_buffer
@@ -54,11 +57,6 @@ namespace owl::oplock
 		}
 		THROW_LAST_ERROR_IF(GetLastError() != ERROR_IO_PENDING);
 
-		return
-		{
-			std::move(path_handle),
-			std::move(overlapped),
-			std::move(oplock_trigger)
-		};
+		return oplock_data{std::move(path_handle), std::move(overlapped), std::move(oplock_trigger)};
 	}
 }
