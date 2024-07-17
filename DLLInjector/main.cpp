@@ -1,5 +1,3 @@
-#include <Windows.h>
-
 #include <exception>
 #include <format>
 #include <iostream>
@@ -33,7 +31,7 @@ int wmain(int argc, wchar_t* argv[])
 		{
 			auto pid = std::stoi(std::wstring{args[3]});
 			std::wcout << std::format(LR"([*] Injecting {} into process with pid {}...)", dll_path, pid) << std::endl;
-			owl::dll_injection::dll_inject_createremotethread(pid, dll_path, false);
+			owl::injection::dll_inject(pid, dll_path, false);
 			std::wcout << L"[+] DLL injected." << std::endl;
 		}
 		else if (command == L"name")
@@ -49,7 +47,7 @@ int wmain(int argc, wchar_t* argv[])
 			std::wcout << std::format(LR"([+] Number of processes found with the specified name: {})", pids.size()) << std::endl;
 
 			std::wcout << std::format(LR"([*] Injecting {} into process with pid {}...)", dll_path, pids[0]) << std::endl;
-			owl::dll_injection::dll_inject_createremotethread(pids[0], dll_path, false);
+			owl::injection::dll_inject(pids[0], dll_path, false);
 			std::wcout << L"[+] DLL injected." << std::endl;
 		}
 		else

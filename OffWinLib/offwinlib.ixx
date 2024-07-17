@@ -9,7 +9,7 @@
 export module offwinlib;
 
 export import :data_conversion;
-export import :dll_injection;
+export import :injection;
 export import :junction;
 export import :misc;
 export import :object_manager;

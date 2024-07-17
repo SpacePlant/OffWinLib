@@ -15,35 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="offwinlib.ixx">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="injection.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="registry.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="junction.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="object_manager.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="oplock.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="data_conversion.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
   </ItemGroup>
 </Project>
