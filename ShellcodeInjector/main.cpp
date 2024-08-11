@@ -2,6 +2,7 @@
 #include <format>
 #include <fstream>
 #include <iostream>
+#include <stdint.h>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -44,7 +45,7 @@ int wmain(int argc, wchar_t* argv[])
 		{
 			auto pid = std::stoi(std::wstring{args[3]});
 			std::wcout << std::format(LR"([*] Injecting shellcode into process with pid {}...)", pid) << std::endl;
-			owl::injection::shellcode_inject(pid, shellcode, false);
+			owl::injection::shellcode_inject(pid, shellcode);
 			std::wcout << L"[+] Shellcode injected." << std::endl;
 		}
 		else if (command == L"name")
@@ -60,7 +61,7 @@ int wmain(int argc, wchar_t* argv[])
 			std::wcout << std::format(LR"([+] Number of processes found with the specified name: {})", pids.size()) << std::endl;
 
 			std::wcout << std::format(LR"([*] Injecting shellcode into process with pid {}...)", pids[0]) << std::endl;
-			owl::injection::shellcode_inject(pids[0], shellcode, false);
+			owl::injection::shellcode_inject(pids[0], shellcode);
 			std::wcout << L"[+] Shellcode injected." << std::endl;
 		}
 	}

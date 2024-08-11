@@ -10,7 +10,7 @@
 - **ErrorMSI**: MSI installer package that throws an error and initiates a rollback immediately.
 
 # Dependencies
-- [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil) via the Microsoft.Windows.ImplementationLibrary NuGet package. If it's not installed automatically on build, run `nuget restore`.
+- [Windows Implementation Libraries (WIL)](https://github.com/microsoft/wil) via the Microsoft.Windows.ImplementationLibrary NuGet package. If it is not installed automatically on build, run `nuget restore`.
 - The ErrorMSI project requires the [HeatWave for VS2022](https://marketplace.visualstudio.com/items?itemName=FireGiant.FireGiantHeatWaveDev17) Visual Studio extension.
 
 # How to Use OffWinLib in your Visual Studio Project

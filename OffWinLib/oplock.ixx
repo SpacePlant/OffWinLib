@@ -13,7 +13,7 @@ export module offwinlib:oplock;
 
 namespace owl::oplock
 {
-	export class oplock_data
+	export class OplockData
 	{
 		// Ordered for correct destruction order
 		std::unique_ptr<OVERLAPPED> overlapped;
@@ -21,13 +21,13 @@ namespace owl::oplock
 		wil::unique_event trigger;
 		wil::unique_hfile handle;
 
-		oplock_data(wil::unique_hfile handle, std::unique_ptr<OVERLAPPED> overlapped, wil::unique_event trigger) : handle{std::move(handle)}, overlapped{std::move(overlapped)}, trigger{std::move(trigger)} {};
+		OplockData(wil::unique_hfile handle, std::unique_ptr<OVERLAPPED> overlapped, wil::unique_event trigger) : handle{std::move(handle)}, overlapped{std::move(overlapped)}, trigger{std::move(trigger)} {};
 	};
 
 	/*
 	* Sets an oplock on the file or folder at the specified DOS path. Returns a struct with a handle to the path and an event that signals when the oplock is triggered. Close the handle to let file operations continue.
 	*/
-	export oplock_data set_oplock(const std::wstring& path, DWORD share_mode, bool exclusive, DWORD access_mask = GENERIC_READ, bool delete_on_close = false)
+	export OplockData set_oplock(const std::wstring& path, DWORD share_mode, bool exclusive, DWORD access_mask = GENERIC_READ, bool delete_on_close = false)
 	{
 		// Open the path
 		DWORD flags = FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_OVERLAPPED | (std::filesystem::is_directory(path) ? FILE_FLAG_BACKUP_SEMANTICS : 0) | (delete_on_close ? FILE_FLAG_DELETE_ON_CLOSE : 0);
@@ -57,6 +57,6 @@ namespace owl::oplock
 		}
 		THROW_LAST_ERROR_IF(GetLastError() != ERROR_IO_PENDING);
 
-		return oplock_data{std::move(path_handle), std::move(overlapped), std::move(oplock_trigger)};
+		return OplockData{std::move(path_handle), std::move(overlapped), std::move(oplock_trigger)};
 	}
 }
