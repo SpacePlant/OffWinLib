@@ -2,8 +2,11 @@ module;
 #pragma comment(lib, "rpcrt4.lib")
 
 #include <Windows.h>
+#include <comdef.h>
+#include <taskschd.h>
 #include <tlhelp32.h>
 
+#include <wil/com.h>
 #include <wil/resource.h>
 #include <wil/result.h>
 #include <wil/safecast.h>
@@ -290,5 +293,27 @@ namespace owl::misc
 				0x00, 0x00, 0x00, 0x00
 			});
 		return rbs;
+	}
+
+	/*
+	* Starts the specified task from the specified task folder.
+	*/
+	export void start_scheduled_task(const std::wstring& task_folder, const std::wstring& task_name)
+	{
+		// Make sure COM is initialized
+		auto com_cleanup = wil::CoInitializeEx();
+
+		// Connect to the task scheduler
+		auto task_scheduler = wil::CoCreateInstance<TaskScheduler, ITaskService>();
+		THROW_IF_FAILED(task_scheduler->Connect(_variant_t{}, _variant_t{}, _variant_t{}, _variant_t{}));
+
+		// Get the task folder
+		wil::com_ptr<ITaskFolder> folder;
+		THROW_IF_FAILED(task_scheduler->GetFolder(_bstr_t{task_folder.c_str()}, &folder));
+
+		// Run the task
+		wil::com_ptr<IRegisteredTask> task;
+		THROW_IF_FAILED(folder->GetTask(_bstr_t{task_name.c_str()}, &task));
+		THROW_IF_FAILED(task->Run(_variant_t{}, nullptr));
 	}
 }
