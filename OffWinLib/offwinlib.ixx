@@ -11,6 +11,7 @@ export module offwinlib;
 export import :data_conversion;
 export import :injection;
 export import :junction;
+export import :memory;
 export import :misc;
 export import :object_manager;
 export import :oplock;

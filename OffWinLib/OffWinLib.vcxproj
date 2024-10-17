@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="data_conversion.ixx" />
     <ClCompile Include="injection.ixx" />
+    <ClCompile Include="memory.ixx" />
     <ClCompile Include="misc.ixx" />
     <ClCompile Include="object_manager.ixx" />
     <ClCompile Include="offwinlib.ixx" />

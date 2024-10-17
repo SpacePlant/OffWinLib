@@ -39,6 +39,9 @@
     <ClCompile Include="data_conversion.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="memory.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
