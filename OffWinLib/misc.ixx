@@ -1,7 +1,9 @@
 module;
+#pragma comment(lib, "ntdll")
 #pragma comment(lib, "rpcrt4.lib")
 
 #include <Windows.h>
+#include <winternl.h>
 #include <comdef.h>
 #include <taskschd.h>
 #include <tlhelp32.h>
@@ -24,6 +26,7 @@ module;
 export module offwinlib:misc;
 
 import :data_conversion;
+import :syscall;
 
 namespace owl::misc
 {
@@ -315,5 +318,69 @@ namespace owl::misc
 		wil::com_ptr<IRegisteredTask> task;
 		THROW_IF_FAILED(folder->GetTask(_bstr_t{task_name.c_str()}, &task));
 		THROW_IF_FAILED(task->Run(_variant_t{}, nullptr));
+	}
+
+	/*
+	* Overwrites the .text section of a loaded DLL with a clean version from "KnownDlls" using indirect syscalls.
+	* 
+	* Note: Make sure that "syscall::initialize_syscalls" has been called first!
+	*/
+	export void unhook_dll_sys(const std::wstring& dll_name)
+	{
+		// Prepare syscalls
+		enum SECTION_INHERIT
+		{
+			ViewShare = 1,
+			ViewUnmap = 2
+		};
+		auto NtOpenSection = &syscall::call<L"NtOpenSection", HANDLE*, ACCESS_MASK, OBJECT_ATTRIBUTES*>;
+		auto NtMapViewOfSection = &syscall::call<L"NtMapViewOfSection", HANDLE, HANDLE, void**, uintptr_t, size_t, int64_t*, size_t*, SECTION_INHERIT, uint32_t, uint32_t>;
+		auto NtUnmapViewOfSection = &syscall::call<L"NtUnmapViewOfSection", HANDLE, void*>;
+		auto NtProtectVirtualMemory = &syscall::call<L"NtProtectVirtualMemory", HANDLE, void**, size_t*, uint32_t, uint32_t*>;
+
+		// Open clean DLL handle from "KnownDlls"
+	#ifdef _WIN64
+		auto knowndlls_path = LR"(\KnownDlls\)" + dll_name + L".dll";
+	#else
+		auto knowndlls_path = LR"(\KnownDlls32\)" + dll_name + L".dll";
+	#endif
+		UNICODE_STRING knowndlls_path_unicode;
+		RtlInitUnicodeString(&knowndlls_path_unicode, knowndlls_path.c_str());
+		OBJECT_ATTRIBUTES knowndlls_path_object;
+		InitializeObjectAttributes(&knowndlls_path_object, &knowndlls_path_unicode, 0, nullptr, nullptr);
+		wil::unique_handle section;
+		THROW_IF_NTSTATUS_FAILED(NtOpenSection(&section, SECTION_MAP_READ, &knowndlls_path_object));
+
+		// Map clean DLL to memory
+		auto current_process = GetCurrentProcess();
+		void* dll_clean = 0;
+		size_t view_size = 0;
+		THROW_IF_NTSTATUS_FAILED(NtMapViewOfSection(section.get(), current_process, &dll_clean, 0, 0, nullptr, &view_size, ViewUnmap, 0, PAGE_READONLY));
+
+		// Find .text sections
+		auto dll = GetModuleHandleW(dll_name.c_str());
+		THROW_LAST_ERROR_IF_NULL(dll);
+		auto dos_header = reinterpret_cast<PIMAGE_DOS_HEADER>(dll);
+		auto nt_header = reinterpret_cast<PIMAGE_NT_HEADERS>(reinterpret_cast<uintptr_t>(dll) + dos_header->e_lfanew);
+		auto text_current = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(dll) + nt_header->OptionalHeader.BaseOfCode);
+		auto text_clean = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(dll_clean) + nt_header->OptionalHeader.BaseOfCode);
+		auto text_size = nt_header->OptionalHeader.SizeOfCode;
+
+		// Make current .text section writable
+		auto base_address = text_current;
+		size_t region_size = text_size;
+		uint32_t old_protect;
+		THROW_IF_NTSTATUS_FAILED(NtProtectVirtualMemory(current_process, &base_address, &region_size, PAGE_EXECUTE_READWRITE, &old_protect));
+
+		// Overwrite current .text section with clean .text section
+		std::memcpy(text_current, text_clean, text_size);
+
+		// Restore memory protections
+		base_address = text_current;
+		region_size = text_size;
+		THROW_IF_NTSTATUS_FAILED(NtProtectVirtualMemory(current_process, &base_address, &region_size, old_protect, &old_protect));
+
+		// Unmap clean DLL
+		THROW_IF_NTSTATUS_FAILED(NtUnmapViewOfSection(current_process, dll_clean));
 	}
 }

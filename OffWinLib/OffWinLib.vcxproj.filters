@@ -42,11 +42,22 @@
     <ClCompile Include="memory.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="syscall.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="syscall_64.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="syscall_32.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
 </Project>

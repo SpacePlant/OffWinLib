@@ -16,3 +16,4 @@ export import :misc;
 export import :object_manager;
 export import :oplock;
 export import :registry;
+export import :syscall;
