@@ -143,7 +143,7 @@ namespace owl::misc
 	/*
 	* Appends a DOS timestamp to a vector (helper function for RBS file generation).
 	*/
-	static void rbs_append_timestamp(std::vector<uint8_t>& v)
+	void rbs_append_timestamp(std::vector<uint8_t>& v)
 	{
 		// Get local time
 		SYSTEMTIME local_time;
@@ -168,7 +168,7 @@ namespace owl::misc
 	/*
 	* Appends a string prefixed with the length to a vector (helper function for RBS file generation).
 	*/
-	static void rbs_append_string(std::vector<uint8_t>& v, std::wstring_view s)
+	void rbs_append_string(std::vector<uint8_t>& v, std::wstring_view s)
 	{
 		// Convert string to UTF-8
 		auto s_converted = data_conversion::utf16_to_utf8(s);
