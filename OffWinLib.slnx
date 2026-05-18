@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="OffWinLib/OffWinLib.vcxproj" Id="9a18647a-659f-4e3f-8884-361b0a449293" />
+</Solution>
