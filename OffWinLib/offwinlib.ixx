@@ -8,6 +8,7 @@
 
 export module offwinlib;
 
+export import :crypto;
 export import :data_conversion;
 export import :injection;
 export import :junction;

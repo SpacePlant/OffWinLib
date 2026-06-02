@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="crypto.ixx" />
     <ClCompile Include="data_conversion.ixx" />
     <ClCompile Include="injection.ixx" />
     <ClCompile Include="memory.ixx" />

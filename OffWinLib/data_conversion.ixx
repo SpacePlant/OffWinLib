@@ -46,7 +46,7 @@ namespace owl::data_conversion
 	/*
 	* Converts a value to an array of bytes.
 	*/
-	export auto value_to_bytes(auto value)
+	export constexpr auto value_to_bytes(auto value)
 	{
 		return std::bit_cast<std::array<uint8_t, sizeof(value)>>(value);
 	}

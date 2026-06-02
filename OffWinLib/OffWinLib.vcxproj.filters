@@ -45,6 +45,9 @@
     <ClCompile Include="syscall.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="crypto.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
