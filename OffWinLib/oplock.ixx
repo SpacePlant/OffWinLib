@@ -42,6 +42,14 @@ namespace owl::oplock
 		}
 
 		/*
+		* Return the trigger state.
+		*/
+		bool is_triggered()
+		{
+			return trigger.is_signaled();
+		}
+
+		/*
 		* Waits for the oplock to trigger.
 		*/
 		bool wait(DWORD ms = INFINITE)
